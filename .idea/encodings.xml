@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/application/views/front/includes/footer-info.blade.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/views/front/includes/footer.blade.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/views/front/includes/header.blade.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/views/front/index.blade.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/application/views/front/template.blade.php" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/public/index.php" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

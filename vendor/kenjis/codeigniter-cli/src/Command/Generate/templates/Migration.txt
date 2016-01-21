@@ -1,0 +1,35 @@
+<?php
+/**
+ * Migration: @@classname@@
+ *
+ * Created by: Cli for CodeIgniter <https://github.com/kenjis/codeigniter-cli>
+ * Created on: @@date@@
+ */
+class Migration_@@classname@@ extends CI_Migration {
+
+	public function up()
+	{
+		// Creating a table
+		$this->dbforge->add_field('id');
+		$this->dbforge->add_field([
+			'created_at' => [
+				'type'=>'DATETIME',
+				'NULL'=>TRUE,
+			],
+			'updated_at' => [
+				'type'=>'DATETIME',
+				'NULL'=>TRUE,
+			],
+			'deleted_at' => [
+				'type'=>'DATETIME',
+				'NULL'=>TRUE
+			]
+		]);
+	}
+
+	public function down()
+	{
+
+	}
+
+}

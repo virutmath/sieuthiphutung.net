@@ -1,0 +1,68 @@
+.nav-content-hide
+{
+    position: absolute;
+    top: 41px;
+    width: 224px;
+    display: none;
+    background: white;
+    z-index: 20;
+    border-left: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+}
+.content-hide-body ul
+{
+    padding-right: 10px;
+    width: 100%;
+}
+.bg-s-line
+{
+    display: block;
+    width: 1px;
+    height: 27px;
+    position: absolute;
+    top: 2px;
+    right: 3px;
+    background: #DEDEDE;
+}
+
+.overlayNonev2 {
+    background: #333;
+    -moz-opacity: 2;
+    filter: alpha(opacity=0)!important;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1!important;
+    display: none;
+    height:100%;
+    width:100%;
+}
+.l-promotion-body ul li a{z-index:-1;position:relative;}
+.cart-total {
+	height:139px!important;
+}
+.promocode-coupon-btn-link {
+width:64px;
+}
+.cart-benefits-list-item-last{width:215px!important;}
+
+.promocode-coupon-input {
+border-radius: 2px 2px 2px 2px;
+float: left;
+width: 130px !important;
+padding:4px 2px;
+}
+
+.promocode-coupon-btn-link {
+top: -2px;
+padding: 4px 8px!important;
+}
+.home-news .home-news-wrap{border:1px solid #e2e2e2;}
+div.oic-f-money {
+padding: 8px 3px 13px 0;
+margin-left: 558px;
+}
