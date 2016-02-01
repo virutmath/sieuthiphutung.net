@@ -17,15 +17,15 @@ class Migration_add_table_originals extends CI_Migration {
 				'constraint'=>255
 			],
 			'created_at' => [
-				'type'=>'DATETIME',
+				'type'=>'INT',
 				'NULL'=>TRUE,
 			],
 			'updated_at' => [
-				'type'=>'DATETIME',
+				'type'=>'INT',
 				'NULL'=>TRUE,
 			],
 			'deleted_at' => [
-				'type'=>'DATETIME',
+				'type'=>'INT',
 				'NULL'=>TRUE
 			]
 		]);

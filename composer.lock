@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cd4a2371fb766008cae836ecfe484901",
-    "content-hash": "e8f50096c59287b873a0206bb775cf14",
+    "hash": "a2a01739020e76f74e577e407db9416d",
+    "content-hash": "e97102c62f26dae5a26248ca3f4f9df2",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -103,6 +103,60 @@
                 "caching"
             ],
             "time": "2015-12-31 16:37:02"
+        },
+        {
+            "name": "mobiledetect/mobiledetectlib",
+            "version": "2.8.19",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/serbanghita/Mobile-Detect.git",
+                "reference": "99e1c21c32104af2d035ff5d2fd8aff8cb29e27c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/99e1c21c32104af2d035ff5d2fd8aff8cb29e27c",
+                "reference": "99e1c21c32104af2d035ff5d2fd8aff8cb29e27c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.0.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "dev-master",
+                "johnkary/phpunit-speedtrap": "~1.0@dev",
+                "phpunit/phpunit": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "Mobile_Detect.php"
+                ],
+                "psr-0": {
+                    "Detection": "namespaced/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Serban Ghita",
+                    "email": "serbanghita@gmail.com",
+                    "homepage": "http://mobiledetect.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Mobile_Detect is a lightweight PHP class for detecting mobile devices. It uses the User-Agent string combined with specific HTTP headers to detect the mobile environment.",
+            "homepage": "https://github.com/serbanghita/Mobile-Detect",
+            "keywords": [
+                "detect mobile devices",
+                "mobile",
+                "mobile detect",
+                "mobile detector",
+                "php mobile detect"
+            ],
+            "time": "2015-12-24 16:37:50"
         },
         {
             "name": "php-di/invoker",
@@ -240,6 +294,57 @@
                 "reflection"
             ],
             "time": "2015-11-29 10:34:25"
+        },
+        {
+            "name": "raveren/kint",
+            "version": "1.0.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/raveren/kint.git",
+                "reference": "c8423b9928bd35bf6ad14c688ab9c6d17d97d0eb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/raveren/kint/zipball/c8423b9928bd35bf6ad14c688ab9c6d17d97d0eb",
+                "reference": "c8423b9928bd35bf6ad14c688ab9c6d17d97d0eb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "Kint.class.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rokas Šleinius",
+                    "homepage": "https://github.com/raveren"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/raveren/kint/contributors"
+                }
+            ],
+            "description": "Kint - debugging helper for PHP developers",
+            "homepage": "https://github.com/raveren/kint",
+            "keywords": [
+                "debug",
+                "kint",
+                "php"
+            ],
+            "time": "2015-09-16 14:09:00"
         }
     ],
     "packages-dev": [
@@ -362,16 +467,16 @@
         },
         {
             "name": "aura/di",
-            "version": "2.2.3",
+            "version": "2.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/auraphp/Aura.Di.git",
-                "reference": "c0d51c15e105c4b6df90d4c29d9e4dac6bee4d5b"
+                "reference": "81d5d9c602ca292a16e32001dcbd2adab5350e28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/auraphp/Aura.Di/zipball/c0d51c15e105c4b6df90d4c29d9e4dac6bee4d5b",
-                "reference": "c0d51c15e105c4b6df90d4c29d9e4dac6bee4d5b",
+                "url": "https://api.github.com/repos/auraphp/Aura.Di/zipball/81d5d9c602ca292a16e32001dcbd2adab5350e28",
+                "reference": "81d5d9c602ca292a16e32001dcbd2adab5350e28",
                 "shasum": ""
             },
             "require": {
@@ -407,7 +512,7 @@
                 "di",
                 "di container"
             ],
-            "time": "2015-05-31 20:45:07"
+            "time": "2016-01-21 09:34:53"
         },
         {
             "name": "aura/dispatcher",

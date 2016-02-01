@@ -20,4 +20,9 @@ class Brands_model extends MY_Model
         ];
         parent::__construct();
     }
+
+    public function getSomeBrand($limit) {
+        $brand = $this->limit($limit)->get_all();
+        return $brand;
+    }
 }

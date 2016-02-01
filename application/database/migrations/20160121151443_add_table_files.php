@@ -38,15 +38,15 @@ class Migration_add_table_files extends CI_Migration {
                 'NULL'=>TRUE
             ],
 			'created_at' => [
-				'type'=>'DATETIME',
+				'type'=>'INT',
 				'NULL'=>TRUE,
 			],
 			'updated_at' => [
-				'type'=>'DATETIME',
+				'type'=>'INT',
 				'NULL'=>TRUE,
 			],
 			'deleted_at' => [
-				'type'=>'DATETIME',
+				'type'=>'INT',
 				'NULL'=>TRUE
 			]
 		]);

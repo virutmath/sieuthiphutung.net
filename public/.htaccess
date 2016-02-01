@@ -1,4 +1,4 @@
 RewriteEngine on
-RewriteCond $1 !^(index\.php|assets|robots\.txt)
+RewriteCond $1 !^(index\.php|assets|images|tests|robots\.txt)
 RewriteRule ^(.*)$ /index.php/$1 [L]
 SetEnv CI_ENV development

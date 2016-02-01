@@ -28,6 +28,6 @@ class Migration_add_column_to_product extends CI_Migration {
 
 	public function down()
 	{
-        $this->dbforge->drop_column('products',['price','description','image']);
+        $this->dbforge->drop_column('products','price,image,description');
 	}
 }

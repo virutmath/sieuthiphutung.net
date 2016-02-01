@@ -7,8 +7,8 @@ class Categories_Seeder extends Seeder {
             'parent_id'=>0,
             'active'=>1,
             'title'=>'gầm phanh',
-            'created_at'=>date('Y-m-d H:i:s'),
-            'updated_at'=>date('Y-m-d H:i:s')
+            'created_at'=>time(),
+            'updated_at'=>time()
         ];
         $this->db->insert('categories',$data);
         $data = [
@@ -16,8 +16,8 @@ class Categories_Seeder extends Seeder {
             'parent_id'=>0,
             'active'=>1,
             'title'=>'gầm phanh',
-            'created_at'=>date('Y-m-d H:i:s'),
-            'updated_at'=>date('Y-m-d H:i:s')
+            'created_at'=>time(),
+            'updated_at'=>time()
         ];
         $this->db->insert('categories',$data);
         $data = [
@@ -25,8 +25,8 @@ class Categories_Seeder extends Seeder {
             'parent_id'=>0,
             'active'=>1,
             'title'=>'gầm phanh',
-            'created_at'=>date('Y-m-d H:i:s'),
-            'updated_at'=>date('Y-m-d H:i:s')
+            'created_at'=>time(),
+            'updated_at'=>time()
         ];
         $this->db->insert('categories',$data);
         $data = [
@@ -34,8 +34,8 @@ class Categories_Seeder extends Seeder {
             'parent_id'=>0,
             'active'=>1,
             'title'=>'gầm phanh',
-            'created_at'=>date('Y-m-d H:i:s'),
-            'updated_at'=>date('Y-m-d H:i:s')
+            'created_at'=>time(),
+            'updated_at'=>time()
         ];
         $this->db->insert('categories',$data);
         $data = [
@@ -43,8 +43,8 @@ class Categories_Seeder extends Seeder {
             'parent_id'=>0,
             'active'=>1,
             'title'=>'gầm phanh',
-            'created_at'=>date('Y-m-d H:i:s'),
-            'updated_at'=>date('Y-m-d H:i:s')
+            'created_at'=>time(),
+            'updated_at'=>time()
         ];
         $this->db->insert('categories',$data);
         $data = [
@@ -52,8 +52,8 @@ class Categories_Seeder extends Seeder {
             'parent_id'=>0,
             'active'=>1,
             'title'=>'gầm phanh',
-            'created_at'=>date('Y-m-d H:i:s'),
-            'updated_at'=>date('Y-m-d H:i:s')
+            'created_at'=>time(),
+            'updated_at'=>time()
         ];
         $this->db->insert('categories',$data);
         $data = [
@@ -61,8 +61,8 @@ class Categories_Seeder extends Seeder {
             'parent_id'=>0,
             'active'=>1,
             'title'=>'gầm phanh',
-            'created_at'=>date('Y-m-d H:i:s'),
-            'updated_at'=>date('Y-m-d H:i:s')
+            'created_at'=>time(),
+            'updated_at'=>time()
         ];
         $this->db->insert('categories',$data);
     }
