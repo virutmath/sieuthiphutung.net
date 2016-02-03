@@ -98,27 +98,27 @@
             <div class="col-md-6">
                 <ul class="payment-icons-list">
                     <li>
-                        <img src="img/payment/visa-straight-32px.png" alt="Image Alternative text"
+                        <img src="{{asset('thebox/web/img/payment/visa-straight-32px.png')}}" alt="Image Alternative text"
                              title="Pay with Visa"/>
                     </li>
                     <li>
-                        <img src="img/payment/mastercard-straight-32px.png" alt="Image Alternative text"
+                        <img src="{{asset('thebox/web/img/payment/mastercard-straight-32px.png')}}" alt="Image Alternative text"
                              title="Pay with Mastercard"/>
                     </li>
                     <li>
-                        <img src="img/payment/paypal-straight-32px.png" alt="Image Alternative text"
+                        <img src="{{asset('thebox/web/img/payment/paypal-straight-32px.png')}}" alt="Image Alternative text"
                              title="Pay with Paypal"/>
                     </li>
                     <li>
-                        <img src="img/payment/visa-electron-straight-32px.png" alt="Image Alternative text"
+                        <img src="{{asset('thebox/web/img/payment/visa-electron-straight-32px.png')}}" alt="Image Alternative text"
                              title="Pay with Visa-electron"/>
                     </li>
                     <li>
-                        <img src="img/payment/maestro-straight-32px.png" alt="Image Alternative text"
+                        <img src="{{asset('thebox/web/img/payment/maestro-straight-32px.png')}}" alt="Image Alternative text"
                              title="Pay with Maestro"/>
                     </li>
                     <li>
-                        <img src="img/payment/discover-straight-32px.png" alt="Image Alternative text"
+                        <img src="{{asset('thebox/web/img/payment/discover-straight-32px.png')}}" alt="Image Alternative text"
                              title="Pay with Discover"/>
                     </li>
                 </ul>
