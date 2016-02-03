@@ -1,0 +1,1 @@
+@extends('smart_store.web.template')

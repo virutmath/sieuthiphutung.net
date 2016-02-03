@@ -11,6 +11,9 @@ class Products_model extends MY_Model
     public $table = 'products';
     public $primary_key = 'id';
 
+    const PRODUCT_ACTIVE = 1;
+    const PRODUCT_INACTIVE = 2;
+
     public function __construct() {
         $this->soft_deletes = TRUE;
         $this->has_one['categories'] = [
@@ -32,5 +35,35 @@ class Products_model extends MY_Model
             'local_key'=>'brand_id'
         ];
         parent::__construct();
+    }
+
+    public function getListByBrand($brand_id,$limit) {
+        $list = $this->fields('id,name,image,price')
+                    ->with('originals')
+                    ->where('status',self::PRODUCT_ACTIVE)
+                    ->where('brand_id',$brand_id)
+                    ->limit($limit)
+                    ->get_all();
+        return $list;
+    }
+
+    public function getListBySuggest($limit) {
+        $list = $this->fields('id,name,image,price')
+                    ->with('originals')
+                    ->where('status',self::PRODUCT_ACTIVE)
+                    ->limit($limit)
+                    ->get_all();
+        return $list;
+    }
+
+    public function getNewProduct($limit) {
+        $list = $this->fields('id,name,image,price')
+                    ->with('originals')
+                    ->where('status',self::PRODUCT_ACTIVE)
+                    ->where_between('created_at',[time() - 7*86400, time()])
+                    ->order_by('id','DESC')
+                    ->limit($limit)
+                    ->get_all();
+        return $list;
     }
 }

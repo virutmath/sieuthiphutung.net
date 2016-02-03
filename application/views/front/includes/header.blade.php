@@ -27,7 +27,7 @@
         <!--Headet main-->
         <div class="clr header-main">
             <div class="main-item-1">
-                <a href="http://www.hathanhauto.com/">
+                <a href="/">
                     <img src="/assets/img/Logo.png" width="80" height="39" alt="logo">
                 </a>
             </div>

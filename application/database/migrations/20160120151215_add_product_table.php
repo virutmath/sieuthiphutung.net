@@ -39,15 +39,15 @@ class Migration_add_product_table extends CI_Migration
                 'type' => 'TINYINT'
             ],
             'created_at' => [
-                'type' => 'DATETIME',
+                'type' => 'INT',
                 'NULL' => TRUE,
             ],
             'updated_at' => [
-                'type' => 'DATETIME',
+                'type' => 'INT',
                 'NULL' => TRUE,
             ],
             'deleted_at' => [
-                'type' => 'DATETIME',
+                'type' => 'INT',
                 'NULL' => TRUE,
             ]
         ]);

@@ -1,0 +1,8 @@
+/*YOUR CUSTOM STYLES*/
+.slider-item-caption-right.slider-item-caption-white {
+    padding: 20px;
+    background: rgba(0,0,0,0.3);
+}
+.navbar-brand > img {
+    margin-top: -20px;
+}

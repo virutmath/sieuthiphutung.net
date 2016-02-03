@@ -50,15 +50,15 @@ class Migration_create_admin_users_table extends CI_Migration {
 		]);
 		$this->dbforge->add_field([
 			'created_at' => [
-				'type'=>'DATETIME',
+				'type'=>'INT',
 				'NULL'=>TRUE,
 			],
 			'updated_at' => [
-				'type'=>'DATETIME',
+				'type'=>'INT',
 				'NULL'=>TRUE,
 			],
 			'deleted_at'=>[
-				'type'=>'DATETIME',
+				'type'=>'INT',
 				'NULL'=>TRUE,
 			]
 		]);
