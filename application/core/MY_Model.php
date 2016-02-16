@@ -104,7 +104,7 @@ class MY_Model extends CI_Model
      * Enables created_at and updated_at fields
      */
     protected $timestamps = TRUE;
-    protected $timestamps_format = 'Y-m-d H:i:s';
+    protected $timestamps_format = 'timestamp';
     protected $_created_at_field;
     protected $_updated_at_field;
     protected $_deleted_at_field;
@@ -618,6 +618,28 @@ class MY_Model extends CI_Model
         }
         return $this;
     }
+
+    /**
+     * Add a where between statement to the query.
+     *
+     * @param  string  $column
+     * @param  array   $values
+     * @param  string  $boolean
+     * @param  bool  $not
+     * @return $this
+     */
+    public function where_between($column, array $values, $boolean = 'and', $not = false)
+    {
+        $type = 'between';
+
+        $array_between = compact('column', 'type', 'boolean', 'not');
+
+        $this->where($column, '>=', $values[0]);
+        $this->where($column, '<=', $values[1]);
+
+        return $this;
+    }
+
     /**
      * public function limit($limit, $offset = 0)
      * Sets a rows limit to the query
@@ -1028,6 +1050,15 @@ class MY_Model extends CI_Model
                     if(array_key_exists('where',$request['parameters']) || array_key_exists('non_exclusive_where',$request['parameters']))
                     {
                         $the_where = array_key_exists('where', $request['parameters']) ? 'where' : 'non_exclusive_where';
+                    }
+                    if(array_key_exists('limit',$request['parameters'])) {
+                        $sub_results->limit(intval($request['parameters']['limit']));
+                    }
+                    if(array_key_exists('orderBy',$request['parameters'])) {
+                        $the_orderBy = explode(',',$request['parameters']['orderBy'],2);
+                        if(sizeof($the_orderBy,2)) {
+                            $sub_results->order_by($the_orderBy[0],$the_orderBy[1]);
+                        }
                     }
                     $sub_results = isset($the_where) ? $sub_results->where($request['parameters'][$the_where],NULL,NULL,FALSE,FALSE,TRUE) : $sub_results;
                 }
