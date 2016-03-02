@@ -4,7 +4,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="{{ asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
                 <p>Alexander Pierce</p>
@@ -25,23 +25,23 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header text-uppercase">{{ trans('admin.main-navigation') }}</li>
-            <li class="active treeview">
+            <li class="{{isset($current_page) && $current_page == 'dashboard' ? 'active' : ''}} treeview">
                 <a href="#">
                     <i class="fa fa-dashboard"></i> <span>{{ trans('admin.dashboard') }}</span>
                 </a>
             </li>
-            <li class="treeview">
+            <li class="{{isset($current_page) && $current_page == 'categories' ? 'active' : ''}} treeview">
                 <a href="#">
                     <i class="fa fa-folder-o"></i>
                     <span>{{ trans('admin.sidebar.categories') }}</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-list-ul"></i> {{ trans('admin.sidebar.categories-list') }}</a></li>
+                    <li><a href="{{ admin_category() }}"><i class="fa fa-list-ul"></i> {{ trans('admin.sidebar.categories-list') }}</a></li>
                     <li><a href="#"><i class="fa fa-file-o"></i> {{ trans('admin.sidebar.categories-add') }}</a></li>
                 </ul>
             </li>
-            <li class="treeview">
+            <li class="{{isset($current_page) && $current_page == 'products' ? 'active' : ''}} treeview">
                 <a href="#">
                     <i class="fa fa-product-hunt"></i>
                     <span>{{ trans('admin.sidebar.products') }}</span>
@@ -52,7 +52,7 @@
                     <li><a href="#"><i class="fa fa-file-o"></i> {{ trans('admin.sidebar.products-add') }}</a></li>
                 </ul>
             </li>
-            <li class="treeview">
+            <li class="{{isset($current_page) && $current_page == 'news' ? 'active' : ''}} treeview">
                 <a href="#">
                     <i class="fa fa-newspaper-o"></i>
                     <span>{{ trans('admin.sidebar.news') }}</span>
@@ -63,7 +63,7 @@
                     <li><a href="#"><i class="fa fa-file-o"></i> {{ trans('admin.sidebar.products-add') }}</a></li>
                 </ul>
             </li>
-            <li class="treeview">
+            <li class="{{isset($current_page) && $current_page == 'orders' ? 'active' : ''}} treeview">
                 <a href="#">
                     <i class="fa fa-shopping-cart"></i>
                     <span>{{ trans('admin.sidebar.orders') }}</span>
@@ -82,7 +82,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="treeview">
+            <li class="{{isset($current_page) && $current_page == 'configurations' ? 'active' : ''}} treeview">
                 <a href="#">
                     <i class="fa fa-cogs"></i>
                     <span>{{ trans('admin.sidebar.configurations') }}</span>

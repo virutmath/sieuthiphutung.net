@@ -1,5 +1,15 @@
-@extends('back.template')
+@extends('admin.template')
 
+@section('breadcrumb')
+    <h1>
+        {{ trans('admin.home') }}
+        <small>{{ trans('admin.control-panel') }}</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> {{ trans('admin.home') }}</a></li>
+        <li class="active">{{ trans('admin.dashboard') }}</li>
+    </ol>
+@stop
 @section('main')
 <div class="row">
     <div class="col-lg-3 col-xs-6">
@@ -105,7 +115,7 @@
             <div class="box-body chat" id="chat-box">
                 <!-- chat item -->
                 <div class="item">
-                    <img src="dist/img/user4-128x128.jpg" alt="user image" class="online">
+                    <img src="{{ asset('admin/dist/img/user4-128x128.jpg') }}" alt="user image" class="online">
 
                     <p class="message">
                         <a href="#" class="name">
@@ -132,7 +142,7 @@
                 <!-- /.item -->
                 <!-- chat item -->
                 <div class="item">
-                    <img src="dist/img/user3-128x128.jpg" alt="user image" class="offline">
+                    <img src="{{ asset('admin/dist/img/user3-128x128.jpg') }}" alt="user image" class="offline">
 
                     <p class="message">
                         <a href="#" class="name">
@@ -147,7 +157,7 @@
                 <!-- /.item -->
                 <!-- chat item -->
                 <div class="item">
-                    <img src="dist/img/user2-160x160.jpg" alt="user image" class="offline">
+                    <img src="{{asset('admin/dist/img/user2-160x160.jpg')}}" alt="user image" class="offline">
 
                     <p class="message">
                         <a href="#" class="name">
@@ -499,4 +509,11 @@
     <!-- right col -->
 </div>
 <!-- /.row (main row) -->
+@stop
+
+@section('script')
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{{ asset('admin/dist/js/pages/dashboard.js') }}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{ asset('admin/dist/js/demo.js') }}"></script>
 @stop

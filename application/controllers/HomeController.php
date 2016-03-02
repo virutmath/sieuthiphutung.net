@@ -10,14 +10,6 @@ class HomeController extends MY_Controller {
         $this->load->model('originals_model','Original');
     }
 
-    public function __call($method, $arguments) {
-        if(starts_with($method, ['Brand_','Product_','Category_','Original_'])) {
-            $model = explode('_',$method);
-            return call_user_func_array([$this->$model[0],$model[1]],$arguments);
-        } else {
-            show_error('no such a method: ' . $method);
-        }
-    }
 
     public function index() {
         $some_brand = $this->Brand_getSomeBrand(3);
@@ -31,11 +23,13 @@ class HomeController extends MY_Controller {
         $suggest_list = $this->Product_getListBySuggest(20);
         $new_product_list = $this->Product_getNewProduct(20);
         $data_view = [
+            'list_categories_menu'=>$this->Category_getActiveCategories(),
             'list_brand_tag'=>$list_brand_tag,
             'brand_list'=>$brand_list,
             'suggest_list'=>$suggest_list,
             'new_product_list'=>$new_product_list
         ];
+//        d($data_view['list_categories_menu']);
         $this->blade->render($this->view_path . '.index',$data_view);
     }
 }
