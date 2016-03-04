@@ -45,6 +45,16 @@ $lang = [
             'status'=>'Trạng thái',
             'action'=>'Thao tác',
             'edit-page-title'=>'Cập nhật danh mục'
+        ],
+        'products' => [
+            'id'=>'ID',
+            'product-name'=>'Tên sản phẩm',
+            'status'=>'Trạng thái',
+            'action'=>'Thao tác',
+            'edit-page-title'=>'Cập nhật sản phẩm',
+            'active'=>'Kích hoạt',
+            'cat-name'=>'Danh mục',
+            'updated-at'=>'Ngày cập nhật'
         ]
     ]
 ];

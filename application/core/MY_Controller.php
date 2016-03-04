@@ -16,6 +16,7 @@ class MY_Controller extends CI_Controller {
         $this->load->library('upload');
         $this->load->library('encryption');
         $this->load->library('session');
+        $this->load->library('pagination');
         $this->load->helper('translate');
         $this->load->helper('string');
         $this->load->helper('form');

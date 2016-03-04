@@ -27,6 +27,24 @@ class CategoriesController extends MY_Controller {
         $this->blade->render($this->admin_path . '.categories.edit',$data_view);
     }
 
+    public function postEdit($id) {
+        $data = [
+            'name' => $this->input->post('category_name', TRUE),
+            'parent_id' => $this->input->post('category_parent'),
+            'icon' => $this->input->post('category_icon'),
+            'active' => $this->input->post('category_active'),
+            'description' => $this->input->post('category_description', TRUE),
+            'keyword' => $this->input->post('category_keyword', TRUE),
+            'title' => $this->input->post('category_title', TRUE)
+
+        ];
+
+        $result = $this->Category_editCategory($id, $data);
+        if($result) {
+            redirect( REWRITE_URL\admin_category_edit($id) );
+        }
+    }
+
     protected function parseCategories($all_cat) {
         $list = [];
         foreach($all_cat as $cat) {

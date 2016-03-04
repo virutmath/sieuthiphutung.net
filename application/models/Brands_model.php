@@ -25,4 +25,8 @@ class Brands_model extends MY_Model
         $brand = $this->limit($limit)->get_all();
         return $brand;
     }
+
+    public function getAll() {
+        return $this->fields()->get_all();
+    }
 }

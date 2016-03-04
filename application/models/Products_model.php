@@ -47,11 +47,33 @@ class Products_model extends MY_Model
         return $list;
     }
 
+    public function getDetail($id, $field = '*') {
+        return $this->fields($field)
+                    ->with('categories')
+                    ->with('originals')
+                    ->with('brands')
+                    ->where('id',intval($id))->get();
+    }
+
     public function getListBySuggest($limit) {
         $list = $this->fields('id,name,image,price')
                     ->with('originals')
                     ->where('status',self::PRODUCT_ACTIVE)
                     ->limit($limit)
+                    ->get_all();
+        return $list;
+    }
+
+    public function getAllProducts($page, $pageSize, $date_from = null, $date_to = null) {
+        $page = intval($page);
+        $page = $page > 1 ? $page : 1;
+        $pageSize = intval($pageSize);
+        $pageSize = $pageSize > 1 ? $pageSize : 1;
+        $list = $this->fields('id,name,status,image,active,updated_at')
+                    ->with('categories')
+                    ->with('originals')
+                    ->with('brands')
+                    ->limit($pageSize, ($page - 1) * $pageSize)
                     ->get_all();
         return $list;
     }

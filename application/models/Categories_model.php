@@ -79,6 +79,32 @@ class Categories_model extends MY_Model
         return $list;
     }
 
+    public function editCategory($id, $data) {
+        $update_data = [];
+        if(isset($data['name'])) {
+            $update_data['name'] = htmlentities($data['name']);
+        }
+        if(isset($data['parent_id'])) {
+            $update_data['parent_id'] = intval($data['parent_id']);
+        }
+        if(isset($data['active'])) {
+            $update_data['active'] = $data['active'] ? self::CAT_ACTIVE : self::CAT_INACTIVE;
+        }
+        if(isset($data['title'])) {
+            $update_data['title'] = htmlentities($data['title']);
+        }
+        if(isset($data['description'])) {
+            $update_data['description'] = htmlentities($data['description']);
+        }
+        if(isset($data['keyword'])) {
+            $update_data['keyword'] = htmlentities($data['keyword']);
+        }
+        if(isset($data['icon'])) {
+            $update_data['icon'] = intval($data['icon']);
+        }
+        return $this->update($update_data,$id);
+    }
+
     public function listIcon() {
         return $this->icon_list;
     }
