@@ -13,7 +13,6 @@ class MY_Controller extends CI_Controller {
     {
         parent::__construct();
         $this->load->library('blade');
-        $this->load->library('upload');
         $this->load->library('encryption');
         $this->load->library('session');
         $this->load->library('pagination');
@@ -28,15 +27,7 @@ class MY_Controller extends CI_Controller {
         $this->load->helper('rewrite_url');
         $this->output->enable_profiler($this->config->item('enable_profiler'));
 
-        //config upload
-        if(!$this->config_upload) {
-            $this->config_upload = [
-                'upload_path'=> './public/upload/',
-                'allowed_types'=>'gif|jpg|png|pdf',
-                'max_size'=>2048
-            ];
-        }
-        $this->upload->initialize($this->config_upload);
+
 
         $this->mobile_detect = new \Detection\MobileDetect();
         if($this->mobile_detect->isMobile()) {
@@ -67,5 +58,13 @@ class MY_Controller extends CI_Controller {
         } else {
             show_error('no such a method: ' . $method);
         }
+    }
+
+    protected function save_image_from_tmp_upload($filename) {
+        if(!$filename) {
+            return;
+        }
+        $path_dir = generate_image_dir_upload($filename,'original');
+        copy(TEMP_UPLOAD_DIR . '/' .$filename,$path_dir . $filename);
     }
 }

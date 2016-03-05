@@ -62,7 +62,8 @@ $route['admin/products'] = 'admin/ProductController';
 $route['admin/products/edit/(:num)']['get'] = 'admin/ProductController/edit/$1';
 $route['admin/products/edit/(:num)']['post'] = 'admin/ProductController/postEdit/$1';
 
-
+//manager file
+$route['file/upload'] = 'files/UploadController/upload';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

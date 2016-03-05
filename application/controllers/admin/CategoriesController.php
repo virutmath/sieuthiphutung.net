@@ -36,12 +36,11 @@ class CategoriesController extends MY_Controller {
             'description' => $this->input->post('category_description', TRUE),
             'keyword' => $this->input->post('category_keyword', TRUE),
             'title' => $this->input->post('category_title', TRUE)
-
         ];
 
         $result = $this->Category_editCategory($id, $data);
         if($result) {
-            redirect( REWRITE_URL\admin_category_edit($id) );
+            redirect( RewriteUrlFn\admin_category_edit($id) );
         }
     }
 

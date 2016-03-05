@@ -36,7 +36,7 @@
                         <td>{{$product->status}}</td>
                         <td>{{$product->active}}</td>
                         <td>
-                            <a href="{{ REWRITE_URL\admin_product_edit($product->id) }}"><i class="fa fa-edit"></i></a>
+                            <a href="{{ RewriteUrlFn\admin_product_edit($product->id) }}"><i class="fa fa-edit"></i></a>
                             <a href=""><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>

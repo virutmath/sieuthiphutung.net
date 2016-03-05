@@ -30,7 +30,7 @@
                         <td>{{$category->name}}</td>
                         <td>{{$category->active}}</td>
                         <td>
-                            <a href="{{ REWRITE_URL\admin_category_edit($category->id) }}"><i class="fa fa-edit"></i></a>
+                            <a href="{{ RewriteUrlFn\admin_category_edit($category->id) }}"><i class="fa fa-edit"></i></a>
                             <a href=""><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>

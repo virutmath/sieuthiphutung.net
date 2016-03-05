@@ -86,3 +86,5 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 
 defined('FILE_TYPE_IMAGE')      OR define('FILE_TYPE_IMAGE',1);
 defined('PICTURE_STORAGE_PATH') OR define('PICTURE_STORAGE_PATH','/images/');
+defined('TEMP_UPLOAD_DIR')      OR define('TEMP_UPLOAD_DIR','tmp/upload');
+defined('TEMP_VIEW_DIR')      OR define('TEMP_VIEW_DIR','/tmp/upload');

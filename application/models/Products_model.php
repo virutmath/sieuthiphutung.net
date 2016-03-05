@@ -12,7 +12,7 @@ class Products_model extends MY_Model
     public $primary_key = 'id';
 
     const PRODUCT_ACTIVE = 1;
-    const PRODUCT_INACTIVE = 2;
+    const PRODUCT_INACTIVE = 0;
 
     public function __construct() {
         $this->soft_deletes = TRUE;
@@ -87,5 +87,46 @@ class Products_model extends MY_Model
                     ->limit($limit)
                     ->get_all();
         return $list;
+    }
+
+    public function editProduct($id, $data) {
+        $update_data = [];
+        if(isset($data['name'])) {
+            $update_data['name'] = htmlentities($data['name']);
+        }
+        if(isset($data['code'])) {
+            $update_data['code'] = htmlentities($data['code']);
+        }
+        if(isset($data['category_id'])) {
+            $update_data['category_id'] = intval($data['category_id']);
+        }
+        if(isset($data['original_id'])) {
+            $update_data['original_id'] = intval($data['original_id']);
+        }
+        if(isset($data['status'])) {
+            $update_data['status'] = intval($data['status']);
+        }
+        if(isset($data['price'])) {
+            $update_data['price'] = intval($data['price']);
+        }
+        if(isset($data['active'])) {
+            $update_data['active'] = $data['active'] ? self::PRODUCT_ACTIVE : self::PRODUCT_INACTIVE;
+        }
+        if(isset($data['description'])) {
+            $update_data['description'] = $data['description'];
+        }
+        if(isset($data['image'])) {
+            $update_data['image'] = htmlentities($data['image']);
+        }
+        if(isset($data['note'])) {
+            $update_data['note'] = htmlentities($data['note']);
+        }
+        if(isset($data['keyword'])) {
+            $update_data['keyword'] = htmlentities($data['keyword']);
+        }
+        if(isset($data['title'])) {
+            $update_data['title'] = htmlentities($data['title']);
+        }
+        return $this->update($update_data,$id);
     }
 }

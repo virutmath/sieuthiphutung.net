@@ -33,6 +33,10 @@
 <script src="{{asset('admin/plugins/iCheck/icheck.min.js')}}"></script>
 <!-- Select2 -->
 <script src="{{asset('admin/plugins/select2/select2.full.min.js')}}"></script>
-
+<!-- InputMask -->
+<script src="{{asset('admin/plugins/input-mask/jquery.inputmask.bundle.min.js')}}"></script>
+<!-- Plupload -->
+<script src="{{asset('admin/plugins/plupload/js/plupload.full.min.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('admin/dist/js/app.min.js') }}"></script>
+<script src="{{ asset('admin/dist/js/script.js') }}"></script>

@@ -7,7 +7,7 @@
                 <img src="{{ asset('admin/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>Alexander Pierce</p>
+                <p>Kiên Đặng</p>
                 <a href="#"><i class="fa fa-circle text-success"></i> {{ trans('admin.online') }}</a>
             </div>
         </div>
@@ -37,7 +37,7 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ REWRITE_URL\admin_category() }}"><i class="fa fa-list-ul"></i> {{ trans('admin.sidebar.categories-list') }}</a></li>
+                    <li><a href="{{ RewriteUrlFn\admin_category() }}"><i class="fa fa-list-ul"></i> {{ trans('admin.sidebar.categories-list') }}</a></li>
                     <li><a href="#"><i class="fa fa-file-o"></i> {{ trans('admin.sidebar.categories-add') }}</a></li>
                 </ul>
             </li>
@@ -48,7 +48,7 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="{{ REWRITE_URL\admin_product() }}"><i class="fa fa-list-ul"></i> {{ trans('admin.sidebar.products-list') }}</a></li>
+                    <li><a href="{{ RewriteUrlFn\admin_product() }}"><i class="fa fa-list-ul"></i> {{ trans('admin.sidebar.products-list') }}</a></li>
                     <li><a href="#"><i class="fa fa-file-o"></i> {{ trans('admin.sidebar.products-add') }}</a></li>
                 </ul>
             </li>
