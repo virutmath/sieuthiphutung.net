@@ -53,14 +53,8 @@ $route['default_controller'] = 'HomeController';
 
 
 
-//admin router
-$route['admin'] = 'admin/DashboardController';
-$route['admin/categories'] = 'admin/CategoriesController';
-$route['admin/categories/edit/(:num)']['get'] = 'admin/CategoriesController/edit/$1';
-$route['admin/categories/edit/(:num)']['post'] = 'admin/CategoriesController/postEdit/$1';
-$route['admin/products'] = 'admin/ProductController';
-$route['admin/products/edit/(:num)']['get'] = 'admin/ProductController/edit/$1';
-$route['admin/products/edit/(:num)']['post'] = 'admin/ProductController/postEdit/$1';
+require_once 'routes/admin_routes.php';
+
 
 //manager file
 $route['file/upload'] = 'files/UploadController/upload';

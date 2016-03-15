@@ -6,9 +6,9 @@
  * Date: 3/4/2016
  * Time: 9:46 PM
  */
-class ProductController extends MY_Controller
+class ProductController extends AdminController
 {
-    protected $pageSize = 30;
+    protected $pageSize = 90;
     const INSTOCK = 1;
     const ORDER = 2;
     const CONTACT = 3;
@@ -39,6 +39,45 @@ class ProductController extends MY_Controller
         $this->blade->render($this->admin_path . '.products.index',$data_view);
     }
 
+    public function add() {
+        $all_cat = $this->Category_getAllCategories();
+        $all_original = $this->Original_getAll();
+        $all_brand = $this->Brand_getAll();
+        $data_view = [
+            'current_page'=>'products',
+            'list_cat'=>$this->parseCategories($all_cat),
+            'list_originals'=>$all_original,
+            'list_brands'=>$all_brand,
+            'list_status'=>$this->product_status
+        ];
+        $this->blade->render($this->admin_path . '.products.add',$data_view);
+    }
+
+    public function postAdd() {
+        $data = [
+            'name' => $this->input->post('name', TRUE),
+            'code' => $this->input->post('code', TRUE),
+            'category_id' => $this->input->post('category_id'),
+            'original_id' => $this->input->post('original_id'),
+            'brand_id' => $this->input->post('brand_id'),
+            'active' => $this->input->post('active'),
+            'status' => $this->input->post('status'),
+            'price' => $this->input->post('price'),
+            'note' => $this->input->post('note', TRUE),
+            'description' => $this->input->post('description', TRUE),
+            'keyword' => $this->input->post('keyword', TRUE),
+            'title' => $this->input->post('title', TRUE),
+        ];
+        $image_post= $this->input->post('image', TRUE);
+        if($image_post) {
+            $data['image'] = $image_post;
+        }
+        if($this->Product_addProduct($data)) {
+            //save image
+            $data['image'] AND $this->save_image_from_tmp_upload($data['image']);
+            redirect( RewriteUrlFn\admin_product_add() );
+        }
+    }
     public function edit($id) {
         $all_cat = $this->Category_getAllCategories();
         $all_original = $this->Original_getAll();
@@ -79,7 +118,19 @@ class ProductController extends MY_Controller
             redirect( RewriteUrlFn\admin_product_edit($id) );
         }
     }
-
+    public function delete() {
+        $this->checkPermission('delete');
+        $record_id = $this->input->post('record',TRUE);
+        //delete category
+        $result = $this->Product_deleteProduct($record_id);
+        if($result) {
+            echo json_encode(['success'=>'Bạn đã xóa thành công']);
+            die();
+        }else{
+            echo json_encode(['error'=>'Không thể thực hiện tác vụ này']);
+            die();
+        }
+    }
     protected function parseCategories($all_cat) {
         $list = [];
         foreach($all_cat as $cat) {

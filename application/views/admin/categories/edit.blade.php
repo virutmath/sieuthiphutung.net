@@ -32,11 +32,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Ảnh danh mục</label>
-                        <input type="file" name="category_file">
-                        <p class="help-block">Đối với danh mục cấp 1, ảnh sẽ được hiển thị ở menu danh mục sản phẩm</p>
-                    </div>
+                    {{CommonHelperFn\ajaxUploadFile(['label'=>'Ảnh danh mục','name'=>'image','id'=>'category_image','value'=>get_picture_path($detail->image)])}}
                     <div class="form-group">
                         <label>Biểu tượng</label>
                         <div class="row">
@@ -62,7 +58,7 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
                 </div>
             </div>
             <div class="box box-primary">
@@ -80,12 +76,12 @@
                     </div>
                     <div class="form-group">
                         <label for="">Tiêu đề danh mục</label>
-                        <input type="text" class="form-control" name="category_title">
+                        <input type="text" class="form-control" name="category_title" value="{{$detail->title}}">
                         <p class="help-block">Mặc định nếu không khai báo, tiêu đề sẽ trùng với tên danh mục</p>
                     </div>
                 </div>
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
                 </div>
             </div>
         </div>

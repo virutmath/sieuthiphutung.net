@@ -49,4 +49,36 @@ UploaderScript.init = function(option, callback){
             callback();
         }
     });
+};
+
+function AdminJs(option) {
+    this.page = option.page;
+    if(!option.csrf_token) {
+        throw new Error('CSRF Token is required');
+    }
+    this.csrf_token = option.csrf_token;
+    if(option.deleteUrl)
+        this.deleteUrl = option.deleteUrl;
 }
+AdminJs.prototype.deleteRecord = function(record, callback) {
+    if(this.page !== 'listing') {
+        throw new Error('Not allowed!');
+    }
+    var data = {record : record}, self = this;
+    data = _.extend(data,this.csrf_token);
+    $.ajax({
+        type : 'post',
+        data : data,
+        url : self.deleteUrl ? self.deleteUrl : window.location.href + '/delete',
+        dataType : 'json',
+        success : function(resp) {
+            if(resp.error) {
+                return callback(resp.error);
+            }
+            if(resp.success) {
+                return callback(null,resp.success);
+            }
+            return callback(new Error("Request error"));
+        }
+    })
+};

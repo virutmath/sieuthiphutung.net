@@ -68,3 +68,6 @@ class MY_Controller extends CI_Controller {
         copy(TEMP_UPLOAD_DIR . '/' .$filename,$path_dir . $filename);
     }
 }
+//require base controller
+require_once APPPATH . 'controllers/AuthController.php';
+require_once APPPATH . 'controllers/AdminController.php';

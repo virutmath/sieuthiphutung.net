@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class DashboardController extends MY_Controller {
+class DashboardController extends AdminController {
 
     public function __construct() {
         parent::__construct();

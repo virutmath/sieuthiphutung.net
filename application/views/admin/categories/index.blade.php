@@ -25,13 +25,13 @@
                         <th>{{trans('admin.page.categories.action')}}</th>
                     </tr>
                     @foreach($list as $category)
-                    <tr>
+                    <tr id="tr_{{$category->id}}">
                         <td>{{$category->id}}</td>
                         <td>{{$category->name}}</td>
                         <td>{{$category->active}}</td>
                         <td>
                             <a href="{{ RewriteUrlFn\admin_category_edit($category->id) }}"><i class="fa fa-edit"></i></a>
-                            <a href=""><i class="fa fa-trash"></i></a>
+                            <a href="#" class="deleteRecord" data-id="{{$category->id}}"><i class="fa fa-trash"></i></a>
                         </td>
                     </tr>
                     @endforeach
@@ -44,4 +44,28 @@
     </div>
 </div>
 
+@stop
+
+@section('script')
+    <script>
+        var adminJs = new AdminJs({
+            page : 'listing',
+            csrf_token : {
+                "<?=CommonHelperFn\get_csrf_token_name()?>" : "<?=CommonHelperFn\get_csrf_token_hash()?>"
+            }
+        });
+        $('.deleteRecord').click(function(e){
+            e.preventDefault();
+            var recordId = $(this).data('id');
+            adminJs.deleteUrl = '/admin/categories/delete';
+            adminJs.deleteRecord(recordId, function(e, result) {
+                if(e) {
+                    alert(e);
+                }else{
+                    alert('Success');
+                    $('#tr_' + recordId).remove();
+                }
+            })
+        })
+    </script>
 @stop

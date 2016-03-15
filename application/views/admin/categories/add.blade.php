@@ -11,7 +11,7 @@
 @stop
 
 @section('main')
-{{ form_open_multipart() }}
+    {{ form_open_multipart() }}
     <div class="row">
         <div class="col-xs-12">
             <div class="box box-primary">
@@ -21,22 +21,18 @@
                 <div class="box-body">
                     <div class="form-group">
                         <label>Tên danh mục</label>
-                        <input type="text" name="category_name" class="form-control" placeholder="Nhập tên danh mục..." value="{{$detail->name}}">
+                        <input type="text" name="category_name" class="form-control" placeholder="Nhập tên danh mục..." value="">
                     </div>
                     <div class="form-group">
                         <label>Danh mục cha</label>
                         <select class="form-control select2" name="category_parent" style="width: 100%;">
                             <option value=""> - Chọn danh mục - </option>
                             @foreach($list_cat as $cat)
-                            <option value="{{$cat->id}}" {{$cat->id == $detail->parent_id ? 'selected' : ''}} >{{$cat->name}}</option>
+                                <option value="{{$cat->id}}" >{{$cat->name}}</option>
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Ảnh danh mục</label>
-                        <input type="file" name="category_file">
-                        <p class="help-block">Đối với danh mục cấp 1, ảnh sẽ được hiển thị ở menu danh mục sản phẩm</p>
-                    </div>
+                    {{CommonHelperFn\ajaxUploadFile(['label'=>'Ảnh danh mục','name'=>'image','id'=>'category_image'])}}
                     <div class="form-group">
                         <label>Biểu tượng</label>
                         <div class="row">
@@ -44,7 +40,6 @@
                                 <div class="col-xs-2">
                                     <label>
                                         <input type="radio" class="form-control iCheck"
-                                               {{$detail->icon == $icon ? "checked" : ""}}
                                                name="category_icon" value="{{$icon}}">
                                         <i class="{{$icon_class}}"></i>
                                     </label>
@@ -56,13 +51,12 @@
                         <label>Kích hoạt</label>
                         <div>
                             <input type="checkbox" class="form-control iCheck"
-                                   {{$detail->active == 1 ? "checked" : ""}}
                                    name="category_active" value="1" >
                         </div>
                     </div>
                 </div>
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
                 </div>
             </div>
             <div class="box box-primary">
@@ -72,11 +66,11 @@
                 <div class="box-body">
                     <div class="form-group">
                         <label>Mô tả danh mục</label>
-                        <textarea class="form-control" name="category_description" rows="3" placeholder="Nhập mô tả ...">{{$detail->description}}</textarea>
+                        <textarea class="form-control" name="category_description" rows="3" placeholder="Nhập mô tả ..."></textarea>
                     </div>
                     <div class="form-group">
                         <label for="">Từ khóa danh mục</label>
-                        <input type="text" name="category_keyword" class="form-control" value="{{$detail->keyword}}">
+                        <input type="text" name="category_keyword" class="form-control" value="">
                     </div>
                     <div class="form-group">
                         <label for="">Tiêu đề danh mục</label>
@@ -85,12 +79,12 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
                 </div>
             </div>
         </div>
     </div>
-{{ form_close() }}
+    {{ form_close() }}
 @stop
 
 @section('script')

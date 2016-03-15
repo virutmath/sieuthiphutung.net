@@ -26,7 +26,7 @@
         <ul class="sidebar-menu">
             <li class="header text-uppercase">{{ trans('admin.main-navigation') }}</li>
             <li class="{{isset($current_page) && $current_page == 'dashboard' ? 'active' : ''}} treeview">
-                <a href="#">
+                <a href="{{RewriteUrlFn\admin_dashboard()}}">
                     <i class="fa fa-dashboard"></i> <span>{{ trans('admin.dashboard') }}</span>
                 </a>
             </li>
@@ -38,7 +38,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{ RewriteUrlFn\admin_category() }}"><i class="fa fa-list-ul"></i> {{ trans('admin.sidebar.categories-list') }}</a></li>
-                    <li><a href="#"><i class="fa fa-file-o"></i> {{ trans('admin.sidebar.categories-add') }}</a></li>
+                    <li><a href="{{RewriteUrlFn\admin_category_add()}}"><i class="fa fa-file-o"></i> {{ trans('admin.sidebar.categories-add') }}</a></li>
                 </ul>
             </li>
             <li class="{{isset($current_page) && $current_page == 'products' ? 'active' : ''}} treeview">
@@ -49,7 +49,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="{{ RewriteUrlFn\admin_product() }}"><i class="fa fa-list-ul"></i> {{ trans('admin.sidebar.products-list') }}</a></li>
-                    <li><a href="#"><i class="fa fa-file-o"></i> {{ trans('admin.sidebar.products-add') }}</a></li>
+                    <li><a href="{{RewriteUrlFn\admin_product_add()}}"><i class="fa fa-file-o"></i> {{ trans('admin.sidebar.products-add') }}</a></li>
                 </ul>
             </li>
             <li class="{{isset($current_page) && $current_page == 'news' ? 'active' : ''}} treeview">
@@ -59,8 +59,8 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-list-ul"></i> {{ trans('admin.sidebar.products-list') }}</a></li>
-                    <li><a href="#"><i class="fa fa-file-o"></i> {{ trans('admin.sidebar.products-add') }}</a></li>
+                    <li><a href="#"><i class="fa fa-list-ul"></i> {{ trans('admin.sidebar.news-list') }}</a></li>
+                    <li><a href="#"><i class="fa fa-file-o"></i> {{ trans('admin.sidebar.news-add') }}</a></li>
                 </ul>
             </li>
             <li class="{{isset($current_page) && $current_page == 'orders' ? 'active' : ''}} treeview">
