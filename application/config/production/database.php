@@ -76,9 +76,9 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => 'super_kelvin',
-	'password' => 'ocH1r52?',
-	'database' => 'sieuthiphutung',
+	'username' => 'nhsiebzf_kiendt',
+	'password' => 'b}tlD=E[9VP+',
+	'database' => 'nhsiebzf_sieuthiphutung',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
