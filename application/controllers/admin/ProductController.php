@@ -36,6 +36,16 @@ class ProductController extends AdminController
             'current_page'=>'products',
             'list'=>$this->Product_getAllProducts($page, $this->pageSize)
         ];
+        //generate table admin
+        $table = new TableAdmin($data_view['list']);
+        $table->column('id',trans('admin.page.products.id'));
+        $table->column('name',trans('admin.page.products.product-name'));
+        $table->column('categories.name',trans('admin.page.products.cat-name'));
+        $table->column('updated_at', trans('admin.page.products.updated-at'),'datetime');
+        $table->columnDropdown('status', trans('admin.page.products.status'),$this->product_status);
+        $table->column('active', trans('admin.page.products.active'),'checkbox');
+        $table->column('id','Edit','edit');
+        $table->column('id','Delete','delete');
         $this->blade->render($this->admin_path . '.products.index',$data_view);
     }
 

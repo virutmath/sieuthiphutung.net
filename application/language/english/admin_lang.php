@@ -56,5 +56,8 @@ $lang = [
             'cat-name'=>'Danh mục',
             'updated-at'=>'Ngày cập nhật'
         ]
-    ]
+    ],
+	'message'=>[
+		'delete-success'=>'Bạn đã xóa thành công'
+	]
 ];

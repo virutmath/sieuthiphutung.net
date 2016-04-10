@@ -29,7 +29,7 @@
                             <th>{{trans('admin.page.products.action')}}</th>
                         </tr>
                         @foreach($list as $product)
-                            <tr id="{{$product->id}}">
+                            <tr id="tr_{{$product->id}}">
                                 <td>{{$product->id}}</td>
                                 <td>{{$product->name}}</td>
                                 <td>{{$product->categories->name}}</td>
@@ -74,7 +74,7 @@
                 if (e) {
                     alert(e);
                 } else {
-                    alert('Success');
+                    alert('<?=trans('admin.message.delete-success')?>');
                     $('#tr_' + recordId).remove();
                 }
             })
