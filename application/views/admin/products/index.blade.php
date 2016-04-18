@@ -18,37 +18,11 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <table class="table table-bordered table-striped table-hover">
-                        <tr>
-                            <th>{{trans('admin.page.products.id')}}</th>
-                            <th>{{trans('admin.page.products.product-name')}}</th>
-                            <th>{{trans('admin.page.products.cat-name')}}</th>
-                            <th>{{trans('admin.page.products.updated-at')}}</th>
-                            <th>{{trans('admin.page.products.status')}}</th>
-                            <th>{{trans('admin.page.products.active')}}</th>
-                            <th>{{trans('admin.page.products.action')}}</th>
-                        </tr>
-                        @foreach($list as $product)
-                            <tr id="tr_{{$product->id}}">
-                                <td>{{$product->id}}</td>
-                                <td>{{$product->name}}</td>
-                                <td>{{$product->categories->name}}</td>
-                                <td>{{date('d/m/Y',$product->updated_at)}}</td>
-                                <td>{{$product->status}}</td>
-                                <td>{{$product->active}}</td>
-                                <td>
-                                    <a href="{{ RewriteUrlFn\admin_product_edit($product->id) }}"><i
-                                                class="fa fa-edit"></i></a>
-                                    <a href="#" class="deleteRecord" data-id="{{$product->id}}"><i
-                                                class="fa fa-trash"></i></a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </table>
+                    {{$tableAdmin}}
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                    The footer of the box
+
                 </div>
                 <!-- box-footer -->
             </div>
@@ -60,23 +34,110 @@
 
 @section('script')
     <script>
-        var adminJs = new AdminJs({
-            page: 'listing',
-            csrf_token: {
-                "<?=CommonHelperFn\get_csrf_token_name()?>": "<?=CommonHelperFn\get_csrf_token_hash()?>"
-            }
+        var adminJs = new TableAdminJs({
+            method: 'post',
+            dataType: 'json'
         });
         $('.deleteRecord').click(function (e) {
             e.preventDefault();
             var recordId = $(this).data('id');
-            adminJs.deleteUrl = '/admin/products/delete';
-            adminJs.deleteRecord(recordId, function (e, result) {
-                if (e) {
-                    alert(e);
-                } else {
-                    alert('<?=trans('admin.message.delete-success')?>');
-                    $('#tr_' + recordId).remove();
+            var option = {
+                url: '<?=RewriteUrlFn\admin_product_delete()?>',
+                data: {
+                    "<?=CommonHelperFn\get_csrf_token_name()?>": "<?=CommonHelperFn\get_csrf_token_hash()?>",
+                    record: recordId
                 }
+            };
+            adminJs.deleteRecord(option, function (response) {
+                $.alert('<?=trans('admin.message.delete-success')?>');
+                $('#tableAdmin-tr-' + recordId).remove();
+            })
+        });
+        $('.iCheck').iCheck({
+            checkboxClass: 'icheckbox_minimal-blue',
+            radioClass: 'icheckbox_minimal-blue',
+            increaseArea: '20%' // optional
+        });
+        $('.control-category_id')
+                .select2()
+                .on('change', function () {
+                    var recordId = $(this).data('id');
+                    var option = {
+                        url: '<?=RewriteUrlFn\admin_product_ajaxUpdate()?>',
+                        data: {
+                            "<?=CommonHelperFn\get_csrf_token_name()?>": "<?=CommonHelperFn\get_csrf_token_hash()?>",
+                            record: recordId,
+                            field: 'category_id',
+                            category_id: $(this).val()
+                        }
+                    };
+                    adminJs.updateRecord(option, function (resp) {
+                        $.alert('Cập nhật thành công');
+                    }, function (resp) {
+                        $.alert({
+                            message: 'Cập nhật thất bại',
+                            type: 'error'
+                        });
+                    })
+                });
+        $('.control-status')
+                .select2()
+                .on('change', function () {
+                    var recordId = $(this).data('id');
+                    var option = {
+                        url: '<?=RewriteUrlFn\admin_product_ajaxUpdate()?>',
+                        data: {
+                            "<?=CommonHelperFn\get_csrf_token_name()?>": "<?=CommonHelperFn\get_csrf_token_hash()?>",
+                            record: recordId,
+                            field: 'status',
+                            status: $(this).val()
+                        }
+                    };
+                    adminJs.updateRecord(option, function (resp) {
+                        $.alert('Cập nhật thành công');
+                    }, function (resp) {
+                        $.alert({
+                            message: 'Cập nhật thất bại',
+                            type: 'error'
+                        });
+                    })
+                });
+        $('.control-best_seller').on('ifChanged', function () {
+            var recordId = $(this).data('id');
+            var option = {
+                url: '<?=RewriteUrlFn\admin_product_ajaxUpdate()?>',
+                data: {
+                    "<?=CommonHelperFn\get_csrf_token_name()?>": "<?=CommonHelperFn\get_csrf_token_hash()?>",
+                    record: recordId,
+                    field: 'best_seller'
+                }
+            };
+            adminJs.updateRecord(option, function (resp) {
+                $.alert('Cập nhật thành công');
+            }, function (resp) {
+                $.alert({
+                    message: 'Cập nhật thất bại',
+                    type: 'error'
+                });
+            })
+        });
+        $('.control-active').on('ifChanged', function() {
+            var recordId = $(this).data('id');
+            var option = {
+                url: '<?=RewriteUrlFn\admin_product_ajaxUpdate()?>',
+                data: {
+                    "<?=CommonHelperFn\get_csrf_token_name()?>": "<?=CommonHelperFn\get_csrf_token_hash()?>",
+                    record: recordId,
+                    field: 'active'
+                }
+            };
+            adminJs.updateRecord(option, function (resp) {
+                $.alert('Cập nhật thành công');
+            }, function (resp) {
+                $.alert({
+                    message: 'Cập nhật thất bại',
+                    type: 'error'
+                });
             })
         })
     </script>

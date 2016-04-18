@@ -117,6 +117,38 @@
 						<input type="text" class="form-control" name="title">
 						<p class="help-block">Mặc định nếu không khai báo, tiêu đề sẽ trùng với tên sản phẩm</p>
 					</div>
+					<div class="form-group">
+						<div class="row">
+							<div class="col-xs-3">
+								<label>Bán chạy</label>
+								<div>
+									<input type="checkbox" class="form-control iCheck"
+										   name="best_seller" value="1" >
+								</div>
+							</div>
+							<div class="col-xs-3">
+								<label>Xu hướng</label>
+								<div>
+									<input type="checkbox" class="form-control iCheck"
+										   name="trending" value="1" >
+								</div>
+							</div>
+							<div class="col-xs-3">
+								<label>Hot</label>
+								<div>
+									<input type="checkbox" class="form-control iCheck"
+										   name="hot" value="1" >
+								</div>
+							</div>
+							<div class="col-xs-3">
+								<label>Nổi bật</label>
+								<div>
+									<input type="checkbox" class="form-control iCheck"
+										   name="feature" value="1" >
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div class="box-footer">
 					<button type="submit" class="btn btn-primary">Lưu</button>

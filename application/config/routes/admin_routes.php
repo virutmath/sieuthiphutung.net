@@ -15,4 +15,5 @@ $route['admin/products/edit/(:num)']['get'] = 'admin/ProductController/edit/$1';
 $route['admin/products/edit/(:num)']['post'] = 'admin/ProductController/postEdit/$1';
 $route['admin/products/add']['get'] = 'admin/ProductController/add';
 $route['admin/products/add']['post'] = 'admin/ProductController/postAdd';
-$route['admin/products/delete']['post'] = 'admin/ProductController/delete';
+$route['admin/products/delete']['post'] = 'admin/ProductController/ajaxDelete';
+$route['admin/products/quickUpdate']['post'] = 'admin/ProductController/ajaxUpdate';

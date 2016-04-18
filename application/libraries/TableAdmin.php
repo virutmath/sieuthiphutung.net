@@ -12,25 +12,36 @@ class TableAdmin
         'defaultOptionLabel' => '',
         'pageSize' => 30
     ];
+    private $editLink;
     private $arrayFieldShow = [];
-    private $editLink = '';
     private $arrayFieldType = [];
     private $arrayLabel = [];
     private $arraySortable = [];
     private $arrayFieldSearch = [];
     private $arrayDropdownOption = [];
     private $i;
+    private $total;
+    private $pageSize = 30;
+    private $currentPage = 1;
 
     public function __construct($list, $config = [])
     {
         $this->listRecord = $list;
-        $this->config = $config;//TODO must add config
+        if ($config) {
+            $this->extendAttributes($config, $this->config);//TODO must add config
+        }
         $this->i = 0;
     }
 
-    //pattern should like : (http://)example.com/abc/$field1/$field2...
-    public function editLink($pattern) {
+    public function setEditLink($pattern = '')
+    {
         $this->editLink = $pattern;
+    }
+
+    public function paging($totalItems, $pageSize)
+    {
+        $this->total = $totalItems;
+        $this->pageSize = $pageSize;
     }
 
     public function column($field = '', $label = '', $type = '', $sortable = false, $searchable = false)
@@ -56,7 +67,11 @@ class TableAdmin
         $this->arrayDropdownOption[$i] = $option;
     }
 
-
+    public function render()
+    {
+        $this->renderTable();
+        return $this->table;
+    }
 
     private function showHeader()
     {
@@ -65,77 +80,228 @@ class TableAdmin
 
     private function showFooter()
     {
-        return '';
+        $pagination = $this->getPaginationString();
+        $from = ($this->currentPage - 1) * $this->pageSize + 1;
+        $to = $this->currentPage * $this->pageSize > $this->total ? $this->total : $this->currentPage * $this->pageSize;
+        $footer =   '<div class="row">';
+        $footer .=      '<div class="col-sm-5">
+                            <div class="tableAdmin-info" role="status" aria-live="polite">
+                            Showing '.$from
+                            .' to '.$to.' of '.$this->total.' entries
+                            </div>
+                        </div>';
+        $footer .= '    <div class="col-sm-7">';
+        $footer .=          '<div class="tableAdmin-paginate">';
+        $footer .=              $pagination;
+        $footer .=          '</div>';
+        $footer .=      '</div>';
+        $footer .=  '</div>';
+        return $footer;
     }
-    private function parseEditLink($dataObject) {
-        $exp = explode('/',$this->editLink);
+
+    private function uriString() {
+        return strtok($_SERVER['REQUEST_URI'],'?');
+    }
+    private function queryString() {
+        return $_SERVER['QUERY_STRING'];
+    }
+    private function parseQueryParams() {
+        $query = $this->queryString();
+        parse_str($query, $params);
+        return $params;
+    }
+
+    //function to return the pagination string
+    private function getPaginationString($adjacents = 1, $pageParam = 'page')
+    {
+        //defaults
+        if(!$adjacents) $adjacents = 1;
+        $limit = $this->pageSize;
+        $totalItems = $this->total;
+        if(!$pageParam) $pageParam = 'page';
+        $targetPage = $this->uriString();
+        $queryParams = $this->parseQueryParams();
+
+        if(isset($queryParams[$pageParam])) {
+            $this->currentPage = $queryParams[$pageParam];
+            unset($queryParams[$pageParam]);
+        }else{
+            $this->currentPage = 1;
+        }
+        $targetPage .= '?' . http_build_query($queryParams);
+        $pageString = $queryParams ? '&page=' : 'page=';
+        //other vars
+        $prev = $this->currentPage - 1;									//previous page is page - 1
+        $next = $this->currentPage + 1;									//next page is page + 1
+        $lastPage = ceil($totalItems / $limit);				//lastpage is = total items / items per page, rounded up.
+        $lpm1 = $lastPage - 1;								//last page minus 1
+
+        /*
+            Now we apply our rules and draw the pagination object.
+            We're actually saving the code to a variable in case we want to draw it more than once.
+        */
+        $pagination = '';
+        if($lastPage > 1)
+        {
+            $pagination .= '<ul class="pagination">';
+
+            //previous button
+            if ($this->currentPage > 1)
+                $pagination .= '<li class="paginate_button previous"><a href="' . $targetPage . $pageString . $prev . '">Previous</a></li>';
+            else
+                $pagination .= '<li class="paginate_button previous disabled"><a href="#">Prev</a></li>';
+
+            //pages
+            if ($lastPage < 7 + ($adjacents * 2))	//not enough pages to bother breaking it up
+            {
+                for ($counter = 1; $counter <= $lastPage; $counter++)
+                {
+                    if ($counter == $this->currentPage)
+                        $pagination .= '<li class="paginate_button active"><a href="#">'.$counter.'</a></li>';
+                    else
+                        $pagination .= '<li class="paginate_button"><a href="' . $targetPage . $pageString . $counter . '">'.$counter.'</a></li>';
+                }
+            }
+            elseif($lastPage >= 7 + ($adjacents * 2))	//enough pages to hide some
+            {
+                //close to beginning; only hide later pages
+                if($this->currentPage < 1 + ($adjacents * 3))
+                {
+                    for ($counter = 1; $counter < 4 + ($adjacents * 2); $counter++)
+                    {
+                        if ($counter == $this->currentPage)
+                            $pagination .= '<li class="paginate_button active"><a href="#">'.$counter.'</a></li>';
+                        else
+                            $pagination .= '<li class="paginate_button"><a href="' . $targetPage . $pageString . $counter . '">'.$counter.'</a></li>';
+                    }
+                    $pagination .= '<li class="paginate_button"><span class="elipses">...</span></li>';
+                    $pagination .= '<li class="paginate_button"><a href="' . $targetPage . $pageString . $lpm1 . '">'.$lpm1.'</a></li>';
+                    $pagination .= '<li class="paginate_button"><a href="' . $targetPage . $pageString . $lastPage . '">'.$lastPage.'</a></li>';
+                }
+                //in middle; hide some front and some back
+                elseif($lastPage - ($adjacents * 2) > $this->currentPage && $this->currentPage > ($adjacents * 2))
+                {
+                    $pagination .= '<li class="paginate_button"><a href="' . $targetPage . $pageString . '1">1</a></li>';
+                    $pagination .= '<li class="paginate_button"><a href="' . $targetPage . $pageString . '2">2</a></li>';
+                    $pagination .= '<li class="paginate_button"><span class="elipses">...</span></li>';
+                    for ($counter = $this->currentPage - $adjacents; $counter <= $this->currentPage + $adjacents; $counter++)
+                    {
+                        if ($counter == $this->currentPage)
+                            $pagination .= '<li class="paginate_button active"><a href="#">'.$counter.'</a></li>';
+                        else
+                            $pagination .= '<li class="paginate_button"><a href="' . $targetPage . $pageString . $counter . '">'.$counter.'</a></li>';
+                    }
+                    $pagination .= '<li class="paginate_button"><span class="elipses">...</span></li>';
+                    $pagination .= '<li class="paginate_button"><a href="' . $targetPage . $pageString . $lpm1 . '">'.$lpm1.'</a></li>';
+                    $pagination .= '<li class="paginate_button"><a href="' . $targetPage . $pageString . $lastPage . '">'.$lastPage.'</a></li>';
+                }
+                //close to end; only hide early pages
+                else
+                {
+                    $pagination .= '<li class="paginate_button"><a href="' . $targetPage . $pageString . '1">1</a></li>';
+                    $pagination .= '<li class="paginate_button"><a href="' . $targetPage . $pageString . '2">2</a></li>';
+                    $pagination .= '<li class="paginate_button"><span class="elipses">...</span></li>';
+                    for ($counter = $lastPage - (1 + ($adjacents * 3)); $counter <= $lastPage; $counter++)
+                    {
+                        if ($counter == $this->currentPage)
+                            $pagination .= '<li class="paginate_button active"><a href="#">'.$counter.'</a></li>';
+                        else
+                            $pagination .= '<li class="paginate_button"><a href="' . $targetPage . $pageString . $counter . '">'.$counter.'</a></li>';
+                    }
+                }
+            }
+
+            //next button
+            if ($this->currentPage < $counter - 1)
+                $pagination .= '<li class="paginate_button"><a href="' . $targetPage . $pageString . $next . '">Next</a></li>';
+            else
+                $pagination .= '<li class="paginate_button disabled"><a href="#">Next</a></li>';
+            $pagination .= "</ul>";
+        }
+
+        return $pagination;
+
+    }
+
+    private function parseLink($link, $dataObject)
+    {
+        $exp = explode('/', $link);
         $params = [];
-        if($exp) {
-            foreach($exp as $section) {
-                if(starts_with('$',$section)) {
+        if ($exp) {
+            foreach ($exp as $section) {
+                if (starts_with($section, '$')) {
                     $params[] = $section;
                 }
             }
         }
-        foreach($params as $param) {
-
+        foreach ($params as $param) {
+            $param_name = substr($param, 1);
+            $link = str_replace($param, $this->prepareFieldName($dataObject, $param_name), $link);
         }
+        return $link;
     }
 
-
-    function render()
-    {
-        $this->render_table();
-        return $this->table;
-    }
 
     private function th()
     {
         $str = '<tr>';
         foreach ($this->arrayLabel as $key => $label) {
-            $str .= '<th>' . $label . '</th>';
+            $str .= '<th class="text-center bg-primary" style="vertical-align: middle">' . $label . '</th>';
         }
         return $str . '</tr>';
     }
 
     private function tr($row_data, $record_id)
     {
-        $str = '<tr id="ta-tr-' . $record_id . '">';
+        $str = '<tr id="tableAdmin-tr-' . $record_id . '">';
         foreach ($this->arrayFieldShow as $key => $fieldName) {
             $type = $this->arrayFieldType[$key];
-            $value = $type !== 'value' ? $this->prepareFieldName($row_data->$fieldName) : $fieldName;
+            $value = !in_array($type, ['value', 'edit', 'delete']) ? $this->prepareFieldName($row_data, $fieldName) : $fieldName;
 
             switch ($type) {
                 case 'checkbox':
                     $str .= '<td class="center">' . $this->generateCheckbox([
-                            'name' => 'control-' . $fieldName . '-' . $key,
-                            'id' => 'control-' . $fieldName . '-' . $key,
-                            'class' => 'form-control iCheck',
+                            'name' => 'control-' . $fieldName . '-' . $record_id,
+                            'id' => 'control-' . $fieldName . '-' . $record_id,
+                            'data-id'=>$record_id,
+                            'class' => 'form-control iCheck control-' . $fieldName,
                             'value' => $value
                         ]) . '</td>';
                     break;
                 case 'datetime':
                     $str .= '<td>' . date($this->config['formatDate'], $value) . '</td>';
                     break;
-                case 'value':
-                    $str .= '<td>' . $value . '</td>';
-                    break;
                 case 'dropdown':
                     $str .= '<td>' . $this->generateDropdown([
-                            'name' => 'control-' . $fieldName . '-' . $key,
-                            'id' => 'control-' . $fieldName . '-' . $key,
-                            'class' => 'form-control dropdown',
+                            'name' => 'control-' . $fieldName . '-' . $record_id,
+                            'id' => 'control-' . $fieldName . '-' . $record_id,
+                            'data-id'=>$record_id,
+                            'class' => 'form-control dropdown control-'.$fieldName,
                             'value' => $value,
                             'option' => $this->arrayDropdownOption[$key]
                         ]) . '</td>';
                     break;
                 case 'edit':
                     $str .= '<td class="text-center">
-                                '.$this->parseEditLink($row_data).'
-                            </td>';
+								<a data-id="'.$record_id.'" href="' . $this->parseLink($this->editLink, $row_data) . '">
+									<i class="fa fa-edit"></i>
+								</a>
+							</td>';
                     break;
+                case 'delete':
+                    $str .= '<td class="text-center">
+								<a href="#" class="deleteRecord" data-id="' . $record_id . '">
+								<i class="fa fa-trash"></i></a>
+							</td>';
+                    break;
+                case 'value':
                 default:
-                    $str .= '<td>' . $value . '</td>';
+                    $td_class = '';
+                    if (is_numeric($value)) {
+                        $value = number_format($value);
+                        $td_class = 'text-right';
+                    }
+                    $str .= '<td class="' . $td_class . '">' . $value . '</td>';
                     break;
             }
         }
@@ -145,18 +311,19 @@ class TableAdmin
     private function prepareFieldName($dataObject, $string = '')
     {
         $arr = explode('.', $string);
-        if($arr) {
+        if ($arr) {
             foreach ($arr as $property) {
-                $dataObject = $dataObject->$property;
+                $dataObject = property_exists($dataObject, $property) ? $dataObject->$property : '';
+                continue;
             }
         }
         return $dataObject;
     }
 
-    private function render_table()
+    private function renderTable()
     {
         $this->table = $this->showHeader();
-        $this->table .= '<table class="table table-bordered">';
+        $this->table .= '<div class="row"><div class="col-xs-12"><table class="table table-bordered table-striped table-hover tableAdmin">';
         $this->table .= $this->th();
         foreach ($this->listRecord as $i => $record) {
             if (property_exists($record, 'id')) {
@@ -167,6 +334,7 @@ class TableAdmin
             $this->table .= $this->tr($record, $id);
         }
         $this->table .= '</table>';
+        $this->table .= '</div></div>';
         $this->table .= $this->showFooter();
     }
 
@@ -175,11 +343,12 @@ class TableAdmin
         $default = $this->controlDefaultValue();
         $this->extendAttributes($attribute, $default);
         $default['checked'] = $default['value'] ? 'checked' : '';
-
-        return '<div class="list-control-item">
+        $default['data-id'] = isset($attribute['data-id']) ? ' data-id="' . $attribute['data-id'] . '" ' : '';
+        return '<div class="list-control-item text-center">
 					<input type="checkbox"
 							' . $this->defaultControlAttribute($default) . '
-							value="' . $default['value'] . '"
+							' . $default['data-id'] . '
+							value="1"
 							' . $default['checked'] . '/>
 				</div>';
     }
@@ -196,13 +365,14 @@ class TableAdmin
         $this->extendAttributes($attribute, $default);
         $default['defaultValue'] = isset($default['defaultValue']) ? $default['defaultValue'] : '';
         $opts = $this->defaultOption($default['label'], $default['defaultValue']);
+        $default['data-id'] = isset($attribute['data-id']) ? ' data-id="' . $attribute['data-id'] . '" ' : '';
         foreach ($default['option'] as $key => $val) {
             $selected = $default['value'] == $key ? 'selected' : '';
             $opts .= '<option value="' . $key . '" ' . $selected . '>' . $val . '</option>';
         }
 
         return '<div class="list-control-item">
-					<select ' . $this->defaultControlAttribute($default) . '>
+					<select ' . $this->defaultControlAttribute($default) . $default['data-id'] .'>
 						' . $opts . '
 					</select>
 				</div>';
@@ -233,6 +403,7 @@ class TableAdmin
     {
         return [
             'name' => '',
+            'label' => '',
             'id' => '',
             'value' => '',
             'title' => '',

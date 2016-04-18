@@ -108,13 +108,49 @@
                 </div><!-- /.box-header -->
                 <div class="box-body">
                     <div class="form-group">
-                        <label for="">Từ khóa sản phẩm</label>
+                        <label>Từ khóa sản phẩm</label>
                         <input type="text" name="keyword" class="form-control" value="{{$detail->keyword}}">
                     </div>
                     <div class="form-group">
-                        <label for="">Tiêu đề sản phẩm</label>
+                        <label>Tiêu đề sản phẩm</label>
                         <input type="text" class="form-control" name="title">
                         <p class="help-block">Mặc định nếu không khai báo, tiêu đề sẽ trùng với tên sản phẩm</p>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <label>Bán chạy</label>
+                                <div>
+                                    <input type="checkbox" class="form-control iCheck"
+                                           {{$detail->best_seller == 1 ? "checked" : ""}}
+                                           name="best_seller" value="1" >
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <label>Xu hướng</label>
+                                <div>
+                                    <input type="checkbox" class="form-control iCheck"
+                                           {{$detail->trending == 1 ? "checked" : ""}}
+                                           name="trending" value="1" >
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <label>Hot</label>
+                                <div>
+                                    <input type="checkbox" class="form-control iCheck"
+                                           {{$detail->hot == 1 ? "checked" : ""}}
+                                           name="hot" value="1" >
+                                </div>
+                            </div>
+                            <div class="col-xs-3">
+                                <label>Nổi bật</label>
+                                <div>
+                                    <input type="checkbox" class="form-control iCheck"
+                                           {{$detail->feature == 1 ? "checked" : ""}}
+                                           name="feature" value="1" >
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="box-footer">
@@ -136,7 +172,7 @@
             checkboxClass: 'icheckbox_square-blue',
             radioClass: 'iradio_square-blue',
             increaseArea: '20%' // optional
-        });
+        })
         CKEDITOR.replace('description');
     </script>
 @stop

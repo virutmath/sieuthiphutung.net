@@ -24,3 +24,9 @@ function admin_product_add() {
 function admin_product_edit($id) {
     return '/admin/products/edit/' . $id;
 }
+function admin_product_ajaxUpdate() {
+    return '/admin/products/quickUpdate';
+}
+function admin_product_delete() {
+    return '/admin/products/delete';
+}

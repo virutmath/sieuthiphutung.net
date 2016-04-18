@@ -25,14 +25,14 @@ function ajaxUploadFile($attribute = array())
 
 	$html = '<div class="form-group">
 					<label>' . $default['label'] . '</label>
-					<div>
+					<div class="ajax-upload-container">
 						<div class="row">
 							<div class="col-xs-6">
 								<input type="file" id="' . $default['browse_id'] . '"/>
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-xs-6">
+							<div class="col-xs-6 ajax-upload-viewer">
 								<input type="hidden" name="' . $default['name'] . '" id="' . $default['id'] . '" value=""/>
 								<img src="' . $default['value'] . '" alt="" id="' . $default['viewer_id'] . '"/>
 							</div>

@@ -71,3 +71,5 @@ class MY_Controller extends CI_Controller {
 //require base controller
 require_once APPPATH . 'controllers/AuthController.php';
 require_once APPPATH . 'controllers/AdminController.php';
+//require TableAdmin
+require_once APPPATH . 'libraries/TableAdmin.php';
