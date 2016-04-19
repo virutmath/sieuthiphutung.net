@@ -9,6 +9,7 @@ $route['admin/categories/add']['post'] = 'admin/CategoriesController/postAdd';
 $route['admin/categories/edit/(:num)']['get'] = 'admin/CategoriesController/edit/$1';
 $route['admin/categories/edit/(:num)']['post'] = 'admin/CategoriesController/postEdit/$1';
 $route['admin/categories/delete']['post'] = 'admin/CategoriesController/delete';
+$route['admin/categories/quickUpdate']['post'] = 'admin/CategoriesController/ajaxUpdate';
 //product page
 $route['admin/products'] = 'admin/ProductController';
 $route['admin/products/edit/(:num)']['get'] = 'admin/ProductController/edit/$1';

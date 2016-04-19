@@ -15,6 +15,12 @@ function admin_category_add() {
 function admin_category_edit($id) {
     return '/admin/categories/edit/' . $id;
 }
+function admin_category_delete() {
+    return '/admin/categories/delete';
+}
+function admin_category_ajaxUpdate() {
+    return '/admin/categories/quickUpdate';
+}
 function admin_product() {
     return '/admin/products';
 }

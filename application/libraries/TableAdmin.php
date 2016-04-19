@@ -260,13 +260,24 @@ class TableAdmin
 
             switch ($type) {
                 case 'checkbox':
-                    $str .= '<td class="center">' . $this->generateCheckbox([
+                    $str .= '<td class="text-center">' . $this->generateCheckbox([
                             'name' => 'control-' . $fieldName . '-' . $record_id,
                             'id' => 'control-' . $fieldName . '-' . $record_id,
                             'data-id'=>$record_id,
                             'class' => 'form-control iCheck control-' . $fieldName,
                             'value' => $value
                         ]) . '</td>';
+                    break;
+                case 'image':
+                    $str .= '<td class="text-center">'.
+                        $this->generateImage([
+                            'name' => 'control-' . $fieldName . '-' . $record_id,
+                            'id' => 'control-' . $fieldName . '-' . $record_id,
+                            'data-id'=>$record_id,
+                            'class'=>'control-' . $fieldName,
+                            'imagePath'=>$value
+                        ])
+                        .'</td>';
                     break;
                 case 'datetime':
                     $str .= '<td>' . date($this->config['formatDate'], $value) . '</td>';
@@ -351,6 +362,11 @@ class TableAdmin
 							value="1"
 							' . $default['checked'] . '/>
 				</div>';
+    }
+    private function generateImage(array $attribute = []) {
+        $default = $this->controlDefaultValue();
+        $this->extendAttributes($attribute, $default);
+        return '<div class="tableAdmin-imageThumb"><img src="'.$default['imagePath'].'"></div>';
     }
 
     private function defaultOption($label = '', $value = '')

@@ -28,24 +28,26 @@ class Categories_model extends MY_Model
         'fa fa-motorcycle'
     ];
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->soft_deletes = TRUE;
 
         parent::__construct();
     }
 
-    public function getActiveCategories($parent_id = 0) {
+    public function getActiveCategories($parent_id = 0)
+    {
         $list = [];
         $parent_id = intval($parent_id);
-        foreach($this->fields('id,name,icon,image,has_child')
-                    ->where('active',self::CAT_ACTIVE)
-                    ->where('parent_id',$parent_id)
-                    ->get_all() as $item) {
+        foreach ($this->fields('id,name,icon,image,has_child')
+                     ->where('active', self::CAT_ACTIVE)
+                     ->where('parent_id', $parent_id)
+                     ->get_all() as $item) {
             $item->icon = $this->icon_list[intval($item->icon)];
             $item->image = get_picture_path($item->image);
-            if($item->has_child) {
+            if ($item->has_child) {
                 $item->child = $this->getActiveCategories($item->id);
-            }else{
+            } else {
                 $item->child = [];
             }
             $list[] = $item;
@@ -53,25 +55,28 @@ class Categories_model extends MY_Model
         return $list;
     }
 
-    public function getDetail($id, $field = '*') {
-        return $this->fields($field)->where('id',intval($id))->get();
+    public function getDetail($id, $field = '*')
+    {
+        return $this->fields($field)->where('id', intval($id))->get();
     }
 
-    public function getActiveDetail($id, $field = '*') {
-        return $this->fields($field)->where('id',intval($id))->where('active',self::CAT_ACTIVE)->get();
+    public function getActiveDetail($id, $field = '*')
+    {
+        return $this->fields($field)->where('id', intval($id))->where('active', self::CAT_ACTIVE)->get();
     }
 
-    public function getAllCategories($parent_id = 0) {
+    public function getAllCategories($parent_id = 0)
+    {
         $list = [];
         $parent_id = intval($parent_id);
-        foreach($this->fields('id,name,icon,active,image,has_child')
-                    ->where('parent_id',$parent_id)
-                    ->get_all() as $item) {
+        foreach ($this->fields('id,name,icon,active,image,has_child')
+                     ->where('parent_id', $parent_id)
+                     ->get_all() as $item) {
             $item->icon = $this->icon_list[intval($item->icon)];
             $item->image = get_picture_path($item->image);
-            if($item->has_child) {
+            if ($item->has_child) {
                 $item->child = $this->getAllCategories($item->id);
-            }else{
+            } else {
                 $item->child = [];
             }
             $list[] = $item;
@@ -79,77 +84,87 @@ class Categories_model extends MY_Model
         return $list;
     }
 
-    public function addCategory($data) {
+    public function addCategory($data)
+    {
         $update_data = [];
-        if(isset($data['name'])) {
+        if (isset($data['name'])) {
             $update_data['name'] = htmlentities($data['name']);
-        }else{
-            show_error('Tên danh mục là bắt buộc',500);
+        } else {
+            show_error('Tên danh mục là bắt buộc', 500);
         }
-        if(isset($data['parent_id'])) {
+        if (isset($data['parent_id'])) {
             $update_data['parent_id'] = intval($data['parent_id']);
-        }else{
+        } else {
             $update_data['parent_id'] = 0;
         }
-        if(isset($data['active'])) {
+        if (isset($data['active'])) {
             $update_data['active'] = $data['active'] ? self::CAT_ACTIVE : self::CAT_INACTIVE;
-        }else{
+        } else {
             $update_data['active'] = self::CAT_INACTIVE;
         }
-        if(isset($data['title'])) {
+        if (isset($data['title'])) {
             $update_data['title'] = htmlentities($data['title']);
         }
-        if(isset($data['description'])) {
+        if (isset($data['description'])) {
             $update_data['description'] = htmlentities($data['description']);
         }
-        if(isset($data['keyword'])) {
+        if (isset($data['keyword'])) {
             $update_data['keyword'] = htmlentities($data['keyword']);
         }
-        if(isset($data['icon'])) {
+        if (isset($data['icon'])) {
             $update_data['icon'] = intval($data['icon']);
         }
-        if(isset($data['image']) && $data['image']) {
+        if (isset($data['image']) && $data['image']) {
             $update_data['image'] = $data['image'];
         }
         return $this->insert($update_data);
     }
 
-    public function editCategory($id, $data) {
+    public function editCategory($id, $data)
+    {
         $update_data = [];
-        if(isset($data['name'])) {
+        if (isset($data['name'])) {
             $update_data['name'] = htmlentities($data['name']);
         }
-        if(isset($data['parent_id'])) {
+        if (isset($data['parent_id'])) {
             $update_data['parent_id'] = intval($data['parent_id']);
         }
-        if(isset($data['active'])) {
+        if (isset($data['active'])) {
             $update_data['active'] = $data['active'] ? self::CAT_ACTIVE : self::CAT_INACTIVE;
         }
-        if(isset($data['title'])) {
+        if (isset($data['title'])) {
             $update_data['title'] = htmlentities($data['title']);
         }
-        if(isset($data['description'])) {
+        if (isset($data['description'])) {
             $update_data['description'] = htmlentities($data['description']);
         }
-        if(isset($data['keyword'])) {
+        if (isset($data['keyword'])) {
             $update_data['keyword'] = htmlentities($data['keyword']);
         }
-        if(isset($data['icon'])) {
+        if (isset($data['icon'])) {
             $update_data['icon'] = intval($data['icon']);
         }
-        if(isset($data['image']) && $data['image']) {
+        if (isset($data['image']) && $data['image']) {
             $update_data['image'] = $data['image'];
         }
-        return $this->update($update_data,$id);
+        return $this->update($update_data, $id);
     }
-    public function deleteCategory($id) {
-        if(!$id) {
+
+    public function toggleBooleanField($field, $id)
+    {
+        return $this->update([$field => "ABS({$field} - 1)"], $id, FALSE);
+    }
+
+    public function deleteCategory($id)
+    {
+        if (!$id) {
             show_error('Bad request');
         }
         return $this->where(intval($id))->delete();
     }
 
-    public function listIcon() {
+    public function listIcon()
+    {
         return $this->icon_list;
     }
 }

@@ -1,18 +1,35 @@
 <?php
 
 class CategoriesController extends AdminController {
+    protected $pageSize = 15;
     public function __construct() {
         parent::__construct();
         $this->load->model('categories_model','Category');
     }
 
     public function index() {
+        $page = intval($this->input->get('page',TRUE));
         $data_view = [
             'current_page'=>'categories'
         ];
         $all_cat = $this->Category_getAllCategories();
         $data_view['list'] = $this->parseCategories($all_cat);
+        $listIcon = $this->Category_listIcon();
+        $dropdownIcon = [];
+        foreach ($listIcon as $icon) {
+            $dropdownIcon[$icon] = $icon;
+        }
         //ddd($data_view['list']);
+        $table = new TableAdmin($data_view['list']);
+        $table->column('id','ID');
+        $table->column('image','Ảnh trang chủ','image');
+        $table->column('name','Tên danh mục');
+        $table->columnDropdown('icon','Biểu tượng',$dropdownIcon);
+        $table->column('active','Kích hoạt','checkbox');
+        $table->column('id','Edit','edit');
+        $table->column('id','Delete','delete');
+        $table->setEditLink(RewriteUrlFn\admin_category_edit('$id'));
+        $data_view['tableAdmin'] = $table->render();
         $this->blade->render($this->admin_path . '.categories.index',$data_view);
     }
 
@@ -91,6 +108,27 @@ class CategoriesController extends AdminController {
             echo json_encode(['error'=>'Không thể thực hiện tác vụ này']);
             die();
         }
+    }
+
+    public function ajaxUpdate() {
+        $arrayReturn = [];
+        $this->checkPermission('edit');
+        $recordId = $this->input->post('record',TRUE);
+        $field = $this->input->post('field',TRUE);
+        switch ($field) {
+            case 'active':
+                $result = $this->Category_toggleBooleanField($field, $recordId);
+                if($result) {
+                    $arrayReturn['success'] = 1;
+                    echo json_encode($arrayReturn);
+                }else{
+                    http_response_code(400);
+                    $arrayReturn['error'] = 'Bad request';
+                    echo json_encode($arrayReturn);
+                }
+                break;
+        }
+        die();
     }
 
     protected function parseCategories($all_cat) {
