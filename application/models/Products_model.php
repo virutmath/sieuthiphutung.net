@@ -112,7 +112,7 @@ class Products_model extends MY_Model
         $list = $this->fields('id,name,image,price')
             ->with('originals')
             ->where('status', self::PRODUCT_ACTIVE)
-            ->where_between('created_at', [time() - 7 * 86400, time()])
+            ->where_between('created_at', [time() - 6 * 30 * 86400, time()])
             ->order_by('id', 'DESC')
             ->limit($limit)
             ->get_all();

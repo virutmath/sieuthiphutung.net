@@ -12,7 +12,7 @@
   },
   "autoload" : {
     "files" : [
-      "application/solid/autoload.php"
+      "application/Solid/autoload.php"
     ]
   },
   "require": {

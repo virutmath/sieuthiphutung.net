@@ -79,6 +79,26 @@
                     templateSelection: function (state) {
                         return $('<span><i class="' + state.id + '" style="width : 20px;"></i> ' + state.text + '</span>');
                     }
+                })
+                .on('change',function() {
+                    var recordId = $(this).data('id');
+                    var option = {
+                        url: '<?=RewriteUrlFn\admin_category_ajaxUpdate()?>',
+                        data: {
+                            "<?=CommonHelperFn\get_csrf_token_name()?>": "<?=CommonHelperFn\get_csrf_token_hash()?>",
+                            record: recordId,
+                            field: 'icon',
+                            icon: $(this).val()
+                        }
+                    };
+                    adminJs.updateRecord(option, function (resp) {
+                        $.alert('Cập nhật thành công');
+                    }, function (resp) {
+                        $.alert({
+                            message: 'Cập nhật thất bại',
+                            type: 'error'
+                        });
+                    })
                 });
         $('.iCheck').iCheck({
             checkboxClass: 'icheckbox_minimal-blue',

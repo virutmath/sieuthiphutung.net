@@ -34,6 +34,14 @@ table.tableAdmin>tbody>tr>td .fa {
     min-width: 200px;
     text-align: center;
 }
+.tableAdmin-imageThumb {
+    width : 100px;
+    max-height: 80px;
+    margin: 0 auto;
+}
+.tableAdmin-imageThumb img {
+    width : 100%;
+}
 .ajax-upload-container {
 
 }

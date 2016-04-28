@@ -39,18 +39,21 @@ class Categories_model extends MY_Model
     {
         $list = [];
         $parent_id = intval($parent_id);
-        foreach ($this->fields('id,name,icon,image,has_child')
-                     ->where('active', self::CAT_ACTIVE)
-                     ->where('parent_id', $parent_id)
-                     ->get_all() as $item) {
-            $item->icon = $this->icon_list[intval($item->icon)];
-            $item->image = get_picture_path($item->image);
-            if ($item->has_child) {
-                $item->child = $this->getActiveCategories($item->id);
-            } else {
-                $item->child = [];
+        $data = $this->fields('id,name,icon,image,has_child')
+            ->where('active', self::CAT_ACTIVE)
+            ->where('parent_id', $parent_id)
+            ->get_all();
+        if($data) {
+            foreach ( $data as $item) {
+                $item->icon = $this->icon_list[intval($item->icon)];
+                $item->image = get_picture_path($item->image);
+                if ($item->has_child) {
+                    $item->child = $this->getActiveCategories($item->id);
+                } else {
+                    $item->child = [];
+                }
+                $list[] = $item;
             }
-            $list[] = $item;
         }
         return $list;
     }
@@ -69,9 +72,13 @@ class Categories_model extends MY_Model
     {
         $list = [];
         $parent_id = intval($parent_id);
-        foreach ($this->fields('id,name,icon,active,image,has_child')
-                     ->where('parent_id', $parent_id)
-                     ->get_all() as $item) {
+        $query = $this->fields('id,name,icon,active,image,has_child')
+            ->where('parent_id', $parent_id)
+            ->get_all();
+        if(!$query) {
+            return [];
+        }
+        foreach ($query as $item) {
             $item->icon = $this->icon_list[intval($item->icon)];
             $item->image = get_picture_path($item->image);
             if ($item->has_child) {
@@ -153,6 +160,11 @@ class Categories_model extends MY_Model
     public function toggleBooleanField($field, $id)
     {
         return $this->update([$field => "ABS({$field} - 1)"], $id, FALSE);
+    }
+
+    public function updateIcon($icon, $id)
+    {
+        return $this->update(['icon' => array_search($icon, $this->icon_list)], $id);
     }
 
     public function deleteCategory($id)
